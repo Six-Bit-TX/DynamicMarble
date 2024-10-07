@@ -212,11 +212,11 @@ def readColmapSceneInfo(path, images, eval, args, opt, llffhold=2):
     ##### For initializing test pose using PCD_Registration
     if eval and opt.get_video==False:    
         print("Loading initial test pose for evaluation.")
-        cameras_extrinsic_file = os.path.join(path, "init_test_pose/sparse/0", "images.txt")
+        cameras_extrinsic_file = os.path.join(path, "images.txt")
     else:
-        cameras_extrinsic_file = os.path.join(path, "sparse/0", "images.txt")
+        cameras_extrinsic_file = os.path.join(path, "images.txt")
 
-    cameras_intrinsic_file = os.path.join(path, "sparse/0", "cameras.txt")
+    cameras_intrinsic_file = os.path.join(path, "cameras.txt")
     cam_extrinsics = read_extrinsics_text(cameras_extrinsic_file)
     cam_intrinsics = read_intrinsics_text(cameras_intrinsic_file)
 
@@ -250,9 +250,9 @@ def readColmapSceneInfo(path, images, eval, args, opt, llffhold=2):
 
     nerf_normalization = getNerfppNorm(train_cam_infos)
 
-    ply_path = os.path.join(path, "sparse/0/points3D.ply")
-    bin_path = os.path.join(path, "sparse/0/points3D.bin")
-    txt_path = os.path.join(path, "sparse/0/points3D.txt")
+    ply_path = os.path.join(path, "points3D.ply")
+    bin_path = os.path.join(path, "points3D.bin")
+    txt_path = os.path.join(path, "points3D.txt")
     if not os.path.exists(ply_path):
         print("Converting point3d.bin to .ply, will happen only the first time you open the scene.")
         try:

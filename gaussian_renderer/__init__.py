@@ -64,13 +64,17 @@ def render(
         tanfovy=tanfovy,
         bg=bg_color,
         scale_modifier=scaling_modifier,
+        # 3dgs
         # viewmatrix=viewpoint_camera.world_view_transform,
         # projmatrix=viewpoint_camera.full_proj_transform,
+        # campos=viewpoint_camera.camera_center,
+        
+        # instantsplat
         viewmatrix=w2c,
         projmatrix=projmatrix,
-        sh_degree=pc.active_sh_degree,
-        # campos=viewpoint_camera.camera_center,
         campos=camera_pos,
+
+        sh_degree=pc.active_sh_degree,
         prefiltered=False,
         debug=pipe.debug,
     )
@@ -99,8 +103,12 @@ def render(
     if pipe.compute_cov3D_python:
         cov3D_precomp = pc.get_covariance(scaling_modifier)
     else:
-        scales = pc.get_scaling
-        rotations = gaussians_rot_trans  # pc.get_rotation
+        # scales = pc.get_scaling
+        # rotations = gaussians_rot_trans  # pc.get_rotation
+
+        # marble
+        scales = pc.get_scaling[:, :1].expand([-1, 3])
+        rotations = gaussians_rot_trans  
 
     # If precomputed colors are provided, use them. Otherwise, if it is desired to precompute colors
     # from SHs in Python, do it. If not, then SH -> RGB conversion will be done by rasterizer.
